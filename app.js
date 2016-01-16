@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var config = require('config');
 var session = require('express-session');
+var request = require('request');
 
 // Application Settings
 var clientId = config.get('uber.client_id');
@@ -50,7 +51,28 @@ app.get(redirect_path, function (req, res) {
             console.log('Access Token Error', error.message);
         }
         var accessToken = oauth2.accessToken.create(token);
-        res.send(accessToken);
+        console.log("token: ", accessToken.token.access_token);
+        requestToCar(accessToken.token.access_token);
+    }
+
+    function requestToCar(access_token) {
+        var options = {
+          'url': 'https://sandbox-api.uber.com.cn/v1/requests',
+          'headers': {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + access_token
+          },
+          'json': {
+            'start_latitude': 39.98408,
+            'start_longitude': 116.315811,
+            'end_latitude': 39.929937,
+            'end_longitude': 116.584917
+            }
+        }
+        request.post(options,function(e,r,result){
+            console.log("e", e);
+            res.send(result.status + result.request_id);
+        });
     }
 });
 

@@ -48,12 +48,6 @@ app.get('/auth', function (req, res) {
     endX = req.param('endX');
     endY = req.param('endY');
     openId = req.param('openId');
-        console.log("***************");
-        console.log(req.param('startX'))
-        console.log(req.params.startX)
-        console.log(req.params['startX'])
-        console.log(req.param['startX'])
-        console.log("***************");
     res.redirect(authorization_uri + "#wechat_redirect");
 });
 
@@ -75,9 +69,6 @@ app.get(redirect_path, function (req, res) {
     }
 
     function requestToCar(access_token) {
-        // console.log("***************");
-        // console.log(startX)
-        // console.log("***************");
         var options = {
           'url': 'https://sandbox-api.uber.com.cn/v1/requests',
           'headers': {
@@ -99,7 +90,7 @@ app.get(redirect_path, function (req, res) {
 });
 
 app.get('/join', function (req, res) {
-    var url = req.protocol + '://' + req.host + req.url;
+    var url = req.protocol + '://' + req.host + ":3000" + req.url;
     var serverId = req.query.serverId;
     signature.sign(url,function(signatureMap){
       signatureMap.appId = wechat_cfg.appid;

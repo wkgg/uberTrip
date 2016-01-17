@@ -5,6 +5,9 @@ var config = require('config');
 var session = require('express-session');
 var request = require('request');
 
+var wechat_cfg = require('./config/wechat.cfg');
+var signature = require('./service/signature');
+
 // Application Settings
 var clientId = config.get('uber.client_id');
 var clientSecret = config.get('uber.client_secret');
@@ -17,6 +20,10 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
+
+app.use(express.static('./public'));
+app.set('views', './views');
+app.set('view engine', 'ejs');
 
 var oauth2 = require('simple-oauth2')({
     clientID: config.get('uber.client_id'),
@@ -76,8 +83,19 @@ app.get(redirect_path, function (req, res) {
     }
 });
 
-app.get('/', function (req, res) {
-    res.send('Hello<br><a href="/auth">Connect With uber</a>');
+app.get('/join', function (req, res) {
+    var url = req.protocol + '://' + req.host + req.url;
+    var serverId = req.query.serverId;
+    console.log("req: ", req)
+    console.log("url: ", url);
+
+    signature.sign(url,function(signatureMap){
+      signatureMap.appId = wechat_cfg.appid;
+      signatureMap.serverId = serverId;
+      var access_token = signatureMap.access_token;
+      console.log("signatureMap: ", signatureMap);
+      res.render('join',signatureMap);  
+    });
 });
 
 app.listen(port);

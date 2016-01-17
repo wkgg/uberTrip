@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+  <title>Uber出行</title>
+  <link rel="stylesheet" href="/stylesheets/weui.min.css"/>
+  <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+  <script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+  <script type="text/javascript">
+    var appId = <%- JSON.stringify(appId) %>;
+    var signature = <%- JSON.stringify(signature) %>;
+    var nonceStr = <%- JSON.stringify(nonceStr) %>;
+    var timestamp = <%- JSON.stringify(timestamp) %>;
+    var jsapi_ticket = <%- JSON.stringify(jsapi_ticket) %>;
+    var shareUrl='http://www.baidu.com';
+  </script>
+  <style type="text/css">
+  body,.weui_cells{font-size:16px!important}
+  .weui_cells{margin-top:0}
+  .weui_label{width:4.3em;color:#999;}
+  .gray{color:#999;}
+  .weui_cells:before{display:none;}
+  </style>
+</head>
+<body>
+  <div class="weui_cells weui_cells_form">
+    <div class="weui_cell">
+        <div class="weui_cell_hd"><label class="weui_label">出发地点:</label></div>
+        <div class="weui_cell_bd weui_cell_primary">
+            <input id="start_place" class="weui_input" type="text" value="北京市海淀区北京大学东南小区">
+        </div>
+    </div>
+  </div>
+    <div class="weui_cells weui_cells_form">
+      <div class="weui_cell">
+          <div class="weui_cell_hd"><label class="weui_label">到达地点:</label></div>
+          <div class="weui_cell_bd weui_cell_primary">
+              <p id="end_place" class="weui_input">北京市海淀区微软大厦</p>
+          </div>
+      </div>
+    </div>
+
+    <div class="weui_cells weui_cells_form">
+      <div class="weui_cell">
+          <div class="weui_cell_hd"><label class="weui_label">预计费用:</label></div>
+          <div class="weui_cell_bd weui_cell_primary">
+              <p id="price" class="weui_input">￥25-38</p>
+          </div>
+      </div>
+    </div>
+
+    <div class="weui_cells weui_cells_form">
+      <div class="weui_cell">
+          <div class="weui_cell_hd"><label class="weui_label">预计时间:</label></div>
+          <div class="weui_cell_bd weui_cell_primary">
+              <p id="time" class="weui_input">30分钟</p>
+          </div>
+      </div>
+    </div>
+
+  <div style="margin:2em 15px">
+    <a href="javascript:;" class="weui_btn weui_btn_primary">我要打车</a>    
+  </div>
+  <script type="text/javascript" src="/join.js"></script>
+</body>
+</html>

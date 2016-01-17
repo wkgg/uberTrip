@@ -98,7 +98,6 @@ app.get('/join', function (req, res) {
 
       time_price.getTimePrice(function(tp){
             signatureMap.time_price = tp;
-            alert(JSON.stringify(tp));
             res.render('join',signatureMap);
       });
 

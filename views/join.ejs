@@ -14,7 +14,6 @@
     var timestamp = <%- JSON.stringify(timestamp) %>;
     var jsapi_ticket = <%- JSON.stringify(jsapi_ticket) %>;
     var shareUrl='http://www.baidu.com';
-    
   </script>
   <style type="text/css">
   body,.weui_cells{font-size:16px!important}
@@ -33,7 +32,7 @@
     <div class="weui_cell">
         <div class="weui_cell_hd"><label class="weui_label">出发地点:</label></div>
         <div class="weui_cell_bd weui_cell_primary">
-            <input id="start_place" class="weui_input" type="text" value="北京市海淀区北京大学东南小区">
+            <input id="start_place" class="weui_input" type="text" value="">
         </div>
     </div>
   </div>
@@ -65,7 +64,7 @@
     </div>
 
   <div style="margin:2em 15px">
-    <a href="http://test.com/auth" class="weui_btn weui_btn_primary">我要打车</a>    
+    <a href="javascript:callCar();" class="weui_btn weui_btn_primary">我要打车</a>    
   </div>
   <script type="text/javascript" src="/join.js"></script>
 </body>

@@ -43,7 +43,18 @@ var authorization_uri = oauth2.authCode.authorizeURL({
 
 // Initial page redirecting to Uber
 app.get('/auth', function (req, res) {
-    res.redirect(authorization_uri);
+    startX = req.param('startX');
+    startY = req.param('startY');
+    endX = req.param('endX');
+    endY = req.param('endY');
+    openId = req.param('openId');
+        console.log("***************");
+        console.log(req.param('startX'))
+        console.log(req.params.startX)
+        console.log(req.params['startX'])
+        console.log(req.param['startX'])
+        console.log("***************");
+    res.redirect(authorization_uri + "#wechat_redirect");
 });
 
 // Callback service parsing the authorization token and asking for the access token
@@ -64,6 +75,9 @@ app.get(redirect_path, function (req, res) {
     }
 
     function requestToCar(access_token) {
+        // console.log("***************");
+        // console.log(startX)
+        // console.log("***************");
         var options = {
           'url': 'https://sandbox-api.uber.com.cn/v1/requests',
           'headers': {
@@ -71,10 +85,10 @@ app.get(redirect_path, function (req, res) {
             'Authorization': 'Bearer ' + access_token
           },
           'json': {
-            'start_latitude': 39.98408,
-            'start_longitude': 116.315811,
-            'end_latitude': 39.929937,
-            'end_longitude': 116.584917
+             'start_latitude': 39.98408,
+             'start_longitude': 116.315811,
+             'end_latitude': 39.929937,
+             'end_longitude': 116.584917
             }
         }
         request.post(options,function(e,r,result){
@@ -87,17 +101,13 @@ app.get(redirect_path, function (req, res) {
 app.get('/join', function (req, res) {
     var url = req.protocol + '://' + req.host + req.url;
     var serverId = req.query.serverId;
-    console.log("req: ", req)
-    console.log("url: ", url);
-
     signature.sign(url,function(signatureMap){
       signatureMap.appId = wechat_cfg.appid;
       signatureMap.serverId = serverId;
       var access_token = signatureMap.access_token;
-      console.log("signatureMap: ", signatureMap);
-
       time_price.getTimePrice(function(tp){
             signatureMap.time_price = tp;
+            console.log("signatureMap: ", signatureMap);
             res.render('join',signatureMap);
       });
 

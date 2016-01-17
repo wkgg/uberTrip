@@ -7,6 +7,7 @@ var request = require('request');
 
 var wechat_cfg = require('./config/wechat.cfg');
 var signature = require('./service/signature');
+var time_price = require('./time_price.js');
 
 // Application Settings
 var clientId = config.get('uber.client_id');
@@ -94,8 +95,15 @@ app.get('/join', function (req, res) {
       signatureMap.serverId = serverId;
       var access_token = signatureMap.access_token;
       console.log("signatureMap: ", signatureMap);
-      res.render('join',signatureMap);  
+
+      time_price.getTimePrice(function(tp){
+            signatureMap.time_price = tp;
+            alert(JSON.stringify(tp));
+            res.render('join',signatureMap);
+      });
+
     });
+
 });
 
 app.listen(port);

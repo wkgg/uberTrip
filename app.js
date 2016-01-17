@@ -7,7 +7,7 @@ var request = require('request');
 
 var wechat_cfg = require('./config/wechat.cfg');
 var signature = require('./service/signature');
-var time_price = require('./time_price.js');
+var time_price = require('./time_price_test.js');
 
 // Application Settings
 var clientId = config.get('uber.client_id');
@@ -59,7 +59,7 @@ app.get(redirect_path, function (req, res) {
             console.log('Access Token Error', error.message);
         }
         var accessToken = oauth2.accessToken.create(token);
-        console.log("token: ", accessToken.token.access_token);
+        // console.log("token: ", accessToken.token.access_token);
         requestToCar(accessToken.token.access_token);
     }
 
@@ -78,7 +78,7 @@ app.get(redirect_path, function (req, res) {
             }
         }
         request.post(options,function(e,r,result){
-            console.log("e", e);
+            // console.log("e", e);
             res.send(result.status + result.request_id);
         });
     }
@@ -87,16 +87,23 @@ app.get(redirect_path, function (req, res) {
 app.get('/join', function (req, res) {
     var url = req.protocol + '://' + req.host + req.url;
     var serverId = req.query.serverId;
-    console.log("req: ", req)
-    console.log("url: ", url);
+    // console.log("req: ", req)
+    // console.log("url: ", url);
 
     signature.sign(url,function(signatureMap){
       signatureMap.appId = wechat_cfg.appid;
       signatureMap.serverId = serverId;
       var access_token = signatureMap.access_token;
-      console.log("signatureMap: ", signatureMap);
+      // console.log("signatureMap: ", signatureMap);
+
+      /*
+      {
+        start : [req.query.x,req.query.y],
+        end : [req.query.x,req.query.y]
+      }*/
 
       time_price.getTimePrice(function(tp){
+            tp.address = req.query.address;
             signatureMap.time_price = tp;
             res.render('join',signatureMap);
       });

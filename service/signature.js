@@ -8,7 +8,7 @@ exports.sign = function (url,callback) {
     timestamp = Math.floor(Date.now()/1000), //精确到秒
     access_token,
     jsapi_ticket;
-    console.log("cache: ", cache.get('ticket'), cache.get('access_token'));
+    // console.log("cache: ", cache.get('ticket'), cache.get('access_token'));
   if(cache.get('ticket') && cache.get('access_token')){
     access_token = cache.get('access_token')
     jsapi_ticket = cache.get('ticket');

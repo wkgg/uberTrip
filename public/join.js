@@ -29,21 +29,6 @@ wx.ready(function(){
   });
 });
 
-function getQueryString(name) {
-    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-    var r = decodeURIComponent(window.location.search).substr(1).match(reg);
-    if (r != null) {
-        return unescape(r[2]);
-    }
-    return null;
-}
-
-function renderData(){
-  document.querySelector('#end_place').innerHTML = getQueryString('address');
-}
-
-renderData();
-
 function sureInput(){
   console.log("Dom: ", document.getElementById('desInput'));
   var address = document.getElementById('desInput').value;

@@ -14,7 +14,7 @@
     var timestamp = <%- JSON.stringify(timestamp) %>;
     var jsapi_ticket = <%- JSON.stringify(jsapi_ticket) %>;
     var shareUrl='http://www.baidu.com';
-    console.log(<%- time_price %>);
+    
   </script>
   <style type="text/css">
   body,.weui_cells{font-size:16px!important}
@@ -22,6 +22,10 @@
   .weui_label{width:4.3em;color:#999;}
   .gray{color:#999;}
   .weui_cells:before{display:none;}
+  .weui_cell_primary {
+    white-space: nowrap;
+    overflow: hidden;
+  }
   </style>
 </head>
 <body>
@@ -37,7 +41,7 @@
       <div class="weui_cell">
           <div class="weui_cell_hd"><label class="weui_label">到达地点:</label></div>
           <div class="weui_cell_bd weui_cell_primary">
-              <p id="end_place" class="weui_input">北京市海淀区微软大厦</p>
+              <p id="end_place" class="weui_input"><%= time_price.address %></p>
           </div>
       </div>
     </div>
@@ -46,7 +50,7 @@
       <div class="weui_cell">
           <div class="weui_cell_hd"><label class="weui_label">预计费用:</label></div>
           <div class="weui_cell_bd weui_cell_primary">
-              <p id="price" class="weui_input">￥25-38</p>
+              <p id="price" class="weui_input"><%= time_price.estimate %></p>
           </div>
       </div>
     </div>
@@ -55,7 +59,7 @@
       <div class="weui_cell">
           <div class="weui_cell_hd"><label class="weui_label">预计时间:</label></div>
           <div class="weui_cell_bd weui_cell_primary">
-              <p id="time" class="weui_input">30分钟</p>
+              <p id="time" class="weui_input"><%= time_price.time %></p>
           </div>
       </div>
     </div>

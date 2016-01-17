@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var config = require('config');
 var session = require('express-session');
 var request = require('request');
+var leanClound = require('./leanCloud.js').cloudHolder();
 
 var wechat_cfg = require('./config/wechat.cfg');
 var signature = require('./service/signature');
@@ -76,15 +77,20 @@ app.get(redirect_path, function (req, res) {
             'Authorization': 'Bearer ' + access_token
           },
           'json': {
-             'start_latitude': 39.98408,
-             'start_longitude': 116.315811,
-             'end_latitude': 39.929937,
-             'end_longitude': 116.584917
+             'start_latitude': startX,
+             'start_longitude': startY,
+             'end_latitude': endX,
+             'end_longitude': endY
             }
         }
         request.post(options,function(e,r,result){
-            // console.log("e", e);
-            res.send(result.status + result.request_id);
+            console.log("e", e);
+            var addData = {
+                    'name' : openId,
+                    'requestId' : result.request_id
+            };
+            leanClound.addInfo(addData);
+            res.send("已帮你预约车辆，尽请期待");
         });
     }
 });
